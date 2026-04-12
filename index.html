@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catelyn Claire Creative</title>
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a; --white:#fff; --off-white:#f5f5f3;
+  --grey-bg:#e8e8e6; --grey-mid:#b0b0ae; --grey-dark:#3a3a3a;
+  --blue:#2255ff;
+  --fd:'Koulen',sans-serif; --fm:'Space Mono',monospace;
+}
+html{scroll-behavior:auto}
+body{font-family:var(--fm);background:var(--white);color:var(--black);overflow-x:hidden;cursor:none}
+
+/* ============================================================
+   RED CIRCLE CURSOR
+============================================================ */
+.cursor-circle{
+  position:fixed;
+  width:18px;height:18px;
+  background:#e02020;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .15s ease,height .15s ease,background .2s;
+  mix-blend-mode:multiply;
+}
+.cursor-circle.big{width:36px;height:36px;background:#e02020;opacity:.7}
+
+/* ============================================================
+   LOADER
+============================================================ */
+#loader{
+  position:fixed;inset:0;background:var(--off-white);z-index:10000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;
+}
+.loader-logo{width:96px;height:96px}
+.loader-logo svg{width:100%;height:100%}
+.ring-outer{transform-origin:50px 50px;animation:spinO 2.2s linear infinite}
+.ring-inner{transform-origin:50px 50px;animation:spinI 1.6s linear infinite reverse}
+@keyframes spinO{to{transform:rotate(360deg)}}
+@keyframes spinI{to{transform:rotate(360deg)}}
+.loader-bar-track{width:144px;height:3px;background:rgba(0,0,0,.1);border-radius:2px;overflow:hidden}
+.loader-bar-fill{height:100%;background:var(--black);border-radius:2px;width:0%;animation:lFill 2.5s ease-in-out forwards}
+@keyframes lFill{0%{width:0%}40%{width:55%}80%{width:82%}100%{width:100%}}
+#loader.fade-out{animation:lOut .7s ease forwards}
+@keyframes lOut{to{opacity:0;pointer-events:none}}
+
+/* ============================================================
+   TOP BAR
+============================================================ */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;
+  padding:13px 48px;
+  background:var(--white);border-bottom:1px solid rgba(0,0,0,.06);
+  font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;
+}
+/* Logo only — no text */
+.top-logo{
+  display:flex;align-items:center;
+  text-decoration:none;color:var(--black);
+  transition:color .2s;
+}
+.top-logo:hover{color:var(--blue)}
+.top-logo svg{width:30px;height:30px}
+.top-clock{justify-self:center;font-variant-numeric:tabular-nums}
+.contact-trigger{justify-self:end}
+.contact-trigger span{display:inline-block;transition:color .2s}
+.contact-trigger:hover span{color:var(--blue)}
+
+/* Contact Drawer */
+.contact-drawer{
+  position:fixed;top:0;right:0;width:310px;height:100vh;
+  background:var(--black);color:var(--white);z-index:600;
+  padding:55px 34px 34px;
+  display:flex;flex-direction:column;gap:28px;
+  transform:translateX(100%);transition:transform .55s cubic-bezier(.77,0,.18,1);
+}
+.contact-drawer.open{transform:translateX(0)}
+.contact-drawer h3{font-family:var(--fd);font-size:2.8rem;letter-spacing:.04em;line-height:.9}
+.contact-drawer a{
+  display:flex;align-items:center;gap:10px;
+  color:var(--white);text-decoration:none;
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:13px 0;
+  transition:color .2s,padding-left .2s;
+}
+.contact-drawer a .arr{font-size:.82rem;transition:transform .2s}
+.contact-drawer a:hover{color:var(--blue);padding-left:6px}
+.contact-drawer a:hover .arr{transform:translate(3px,-3px)}
+.drawer-close{
+  position:absolute;top:16px;right:20px;
+  background:none;border:none;color:var(--white);font-size:1.1rem;opacity:.4;transition:opacity .2s
+}
+.drawer-close:hover{opacity:1}
+.drawer-overlay{position:fixed;inset:0;z-index:590;display:none}
+.drawer-overlay.open{display:block}
+
+/* ============================================================
+   SHARED SCROLL ARROW
+============================================================ */
+.scroll-arrow{
+  display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+  opacity:.4;transition:opacity .3s;
+  background:none;border:none;padding:0;
+}
+.scroll-arrow:hover{opacity:1}
+.scroll-arrow svg{
+  animation:aBounce 2s ease-in-out infinite;
+  transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1);
+}
+.scroll-arrow:hover svg{width:55px !important;height:55px !important}
+.scroll-arrow span{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid)}
+@keyframes aBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* Tag preview overlay */
+.tag-preview{
+  position:fixed;top:0;left:0;width:75vw;height:100vh;
+  pointer-events:none;z-index:400;opacity:0;transition:opacity .35s;overflow:hidden;
+}
+.tag-preview.visible{opacity:1}
+.tag-preview img{width:100%;height:100%;object-fit:cover}
+.tag-preview-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(255,255,255,0) 55%,var(--white) 100%);
+}
+
+/* ============================================================
+   PAGE 1 — HERO
+============================================================ */
+#hero{
+  min-height:100vh;
+  padding:70px 40px 48px;
+  display:flex;flex-direction:column;
+}
+
+.hero-name-wrap{
+  flex:1;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  align-items:center; /* center the whole block */
+}
+
+/* NAME — one line, full width, centered */
+.hero-name{
+  font-family:var(--fd);
+  font-size:clamp(60px,12vw,180px);
+  line-height:.88;letter-spacing:-.02em;text-transform:uppercase;
+  white-space:nowrap;   /* force single line */
+  display:flex;
+  justify-content:center;
+  user-select:none;
+  width:100%;
+}
+/* Letters inside the name */
+.h-letter{
+  display:inline-block;
+  color:var(--black);   /* NO color change on hover */
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+/* Domino tilt — JS applies class based on cursor direction */
+.h-letter.tilt-right{ transform:rotate(18deg) translateY(-6px); }
+.h-letter.tilt-left { transform:rotate(-18deg) translateY(-6px); }
+/* Adjacent domino cascade — smaller tilt on neighbours */
+.h-letter.tilt-right-1{ transform:rotate(10deg) translateY(-3px); }
+.h-letter.tilt-left-1 { transform:rotate(-10deg) translateY(-3px); }
+.h-letter.tilt-right-2{ transform:rotate(4deg) translateY(-1px); }
+.h-letter.tilt-left-2 { transform:rotate(-4deg) translateY(-1px); }
+
+/* Subtitle — centered under name */
+.hero-subtitle{
+  font-family:var(--fd);
+  font-size:clamp(18px,2.6vw,42px);
+  line-height:1;letter-spacing:-.01em;text-transform:uppercase;
+  color:var(--grey-dark);
+  margin-top:.22em;
+  text-align:center;        /* centered under name */
+  display:inline-block;
+  position:relative;
+}
+.hero-subtitle::before{
+  content:'';position:absolute;inset:-3px;left:-10px;
+  background:var(--blue);transform:scaleX(0);transform-origin:left;
+  transition:transform .22s cubic-bezier(.77,0,.18,1);z-index:-1;
+}
+.hero-subtitle:hover{color:var(--white)}
+.hero-subtitle:hover::before{transform:scaleX(1)}
+
+/* Tags — LEFT aligned, smaller, tighter leading */
+.hero-tags{
+  display:flex;flex-direction:column;gap:0px;
+  margin-top:28px;
+  align-self:flex-start; /* left-align despite center parent */
+}
+.hero-tag{
+  font-family:var(--fd);
+  font-size:clamp(14px,1.6vw,24px); /* smaller */
+  text-transform:uppercase;letter-spacing:.06em;
+  color:var(--grey-mid);
+  display:inline-block;
+  padding:1px 0;
+  line-height:1.15; /* tighter leading */
+  position:relative;width:fit-content;transition:color .18s;
+}
+.hero-tag::before{
+  content:'';position:absolute;inset:-1px;left:-8px;
+  background:var(--blue);transform:scaleX(0);transform-origin:left;
+  transition:transform .2s cubic-bezier(.77,0,.18,1);z-index:-1;
+}
+.hero-tag:hover::before{transform:scaleX(1)}
+.hero-tag:hover{color:var(--white)}
+
+/* Scroll arrow centered at bottom of hero */
+.hero-scroll{
+  display:flex;justify-content:center;
+  padding-bottom:12px;margin-top:auto;
+}
+
+/* ============================================================
+   PAGE 2 — MANIFESTO
+============================================================ */
+#manifesto{
+  min-height:65vh;
+  padding:80px 48px 60px;
+  display:flex;flex-direction:column;justify-content:center;gap:40px;
+  background:var(--white);overflow:hidden;
+}
+.manifesto-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-mid)}
+.manifesto-lines{display:flex;flex-direction:column;gap:6px}
+.manifesto-line{
+  font-family:var(--fd);
+  font-size:clamp(24px,3.8vw,62px);
+  text-transform:uppercase;letter-spacing:-.01em;line-height:1.02;
+  display:flex;flex-wrap:wrap;gap:.28em;
+}
+.m-word{
+  display:inline-block;opacity:0;transform:translateX(90px);
+  transition:transform .9s cubic-bezier(.77,0,.18,1),
+             opacity .8s ease,
+             color .4s ease;
+}
+.manifesto-line[data-phase="center"] .m-word,
+.manifesto-line[data-phase="left"]   .m-word{opacity:1;transform:translateX(0)}
+.manifesto-line[data-phase="exit"]   .m-word{opacity:0;transform:translateX(-90px)}
+.manifesto-line[data-phase="hidden"] .m-word{opacity:0;transform:translateX(90px)}
+
+/* "Design." is grey by default, only turns blue on hover of its own line */
+.m-word.accent{color:var(--grey-mid)}
+.manifesto-line:hover .m-word.accent{color:var(--blue)}
+/* When revealed and hovered — ensure blue shows */
+.manifesto-line[data-phase="center"]:hover .m-word.accent,
+.manifesto-line[data-phase="left"]:hover   .m-word.accent{color:var(--blue)}
+
+.manifesto-arrow-wrap{
+  display:flex;justify-content:center;margin-top:24px;
+}
+
+/* ============================================================
+   PAGE 3 — FEATURED + SLOT
+============================================================ */
+#featured{
+  min-height:100vh;padding:89px 48px;
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:start;background:var(--white);position:relative;
+}
+.featured-left{position:sticky;top:80px}
+.featured-img{width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--grey-bg)}
+.featured-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.featured-img:hover img{transform:scale(1.04)}
+.featured-meta{
+  margin-top:20px;display:grid;grid-template-columns:auto 1fr;
+  gap:7px 22px;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.meta-label{color:var(--grey-mid);font-weight:700}
+.meta-val{color:var(--grey-dark)}
+.featured-year{font-family:var(--fd);font-size:1.1rem;color:var(--grey-mid);margin-top:14px}
+
+.slot-right{display:flex;flex-direction:column}
+.slot-controls{display:flex;gap:20px;align-items:center;margin-bottom:16px}
+.slot-btn{
+  background:none;border:none;padding:0;
+  font-family:var(--fm);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--grey-mid);opacity:.35;transition:color .2s,opacity .2s;
+}
+.slot-btn:hover{color:var(--black);opacity:.9}
+.slot-machine{height:460px;overflow:hidden}
+.slot-track{display:flex;flex-direction:column;transition:transform .6s cubic-bezier(.77,0,.18,1)}
+.slot-item{
+  font-family:var(--fd);
+  font-size:clamp(28px,4.2vw,64px);
+  text-transform:uppercase;letter-spacing:-.01em;
+  color:rgba(0,0,0,.1);line-height:1;padding:10px 0;
+  transition:color .2s;white-space:nowrap;
+}
+.slot-item:hover{color:var(--black) !important}
+.slot-item.active{color:rgba(0,0,0,.28)}
+
+/* Center scroll arrow in featured section */
+.featured-scroll-center{
+  grid-column:1/-1;
+  display:flex;justify-content:center;
+  padding-top:40px;
+}
+
+.corner-arrow{position:absolute;bottom:40px;right:48px;opacity:.2;transition:opacity .3s}
+.corner-arrow:hover{opacity:1}
+.corner-arrow svg{
+  width:34px;height:34px;transform:rotate(25deg);
+  animation:aBounce 2s ease-in-out infinite;
+  transition:width .35s cubic-bezier(.34,1.56,.64,1),height .35s cubic-bezier(.34,1.56,.64,1);
+}
+.corner-arrow:hover svg{width:55px;height:55px}
+
+/* ============================================================
+   PAGE 4 — ABOUT
+============================================================ */
+#about{min-height:100vh;padding:89px 48px;background:var(--white)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-left h2{
+  font-family:var(--fd);font-size:clamp(55px,7vw,100px);
+  text-transform:uppercase;letter-spacing:-.01em;line-height:.88;margin-bottom:28px;
+}
+.about-left p{font-size:.72rem;line-height:1.85;color:var(--grey-dark);max-width:380px;margin-bottom:44px}
+/* Education heading — larger but still below h2 in hierarchy */
+.about-left h3{
+  font-family:var(--fd);
+  font-size:clamp(26px,2.8vw,40px); /* slightly larger for legibility */
+  text-transform:uppercase;letter-spacing:.03em;margin-bottom:16px;
+}
+.edu-entry{margin-bottom:18px;border-left:2px solid var(--grey-bg);padding-left:16px}
+.edu-entry .school{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.edu-entry .degree{font-size:.66rem;color:var(--grey-mid);font-style:italic}
+.edu-entry .dates {font-size:.6rem;color:var(--grey-mid);letter-spacing:.08em}
+
+/* About photos — NO hover effects, no transforms */
+.about-right{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.about-photo{overflow:hidden;background:var(--grey-bg);border-radius:3px;position:relative}
+/* No hover transforms at all */
+.about-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.about-photo.headshot{width:155px;aspect-ratio:3/4}
+.about-photo.side-img{aspect-ratio:1/1.1}
+
+/* confetti (blacks/greys/white only) */
+.confetti-wrap{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:10}
+.confetti-particle{position:absolute;border-radius:50%;opacity:0;transform:scale(0)}
+.confetti-particle.pop{animation:cPop .75s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes cPop{0%{opacity:0;transform:scale(0) translate(0,0)}55%{opacity:.8}100%{opacity:0;transform:scale(1.4) translate(var(--tx),var(--ty))}}
+
+.about-tagline-bar{
+  background:var(--grey-bg);padding:18px 24px;
+  text-align:center;font-family:var(--fd);
+  font-size:clamp(13px,1.5vw,20px);text-transform:uppercase;letter-spacing:.16em;
+  margin-top:48px;
+}
+.about-almost{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  text-align:center;margin-top:20px;
+  font-size:.62rem;letter-spacing:.08em;color:var(--grey-mid);font-style:italic;
+}
+.about-almost strong{color:var(--grey-dark);font-style:normal}
+
+/* ============================================================
+   PAGE 5 — CONTACT / FOOTER
+============================================================ */
+#contact-section{
+  min-height:100vh;background:var(--off-white);
+  display:flex;flex-direction:column;padding:0 0 55px;
+}
+.contact-top-bar{
+  display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;
+  padding:13px 48px;border-bottom:1px solid rgba(0,0,0,.08);
+  font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;background:var(--white);
+}
+.contact-body{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:36px;padding:80px 48px;
+}
+.contact-tagline{
+  font-family:var(--fd);font-size:clamp(13px,1.6vw,22px);
+  text-transform:uppercase;letter-spacing:.18em;color:var(--grey-dark);
+}
+/* Nav card — center text, no divider lines */
+.contact-card{
+  background:var(--black);color:var(--white);
+  padding:44px 60px;min-width:260px;text-align:center;
+}
+.contact-card nav{display:flex;flex-direction:column;gap:0}
+.contact-card nav a{
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--white);text-decoration:none;padding:10px 0;transition:color .2s;
+}
+.contact-card nav a:hover{color:var(--blue)}
+
+/* Collaborate Now — own box, not stacked */
+.collab-btn-wrap{margin-top:12px}
+.collab-btn{
+  display:inline-block;background:var(--black);border:2px solid var(--white);color:var(--white);
+  font-family:var(--fd);font-size:clamp(18px,2vw,26px);letter-spacing:.1em;text-transform:uppercase;
+  padding:14px 44px;text-decoration:none;white-space:nowrap;
+  transition:background .25s,border-color .25s;
+}
+.collab-btn:hover{background:var(--blue);border-color:var(--blue)}
+
+.footer-brand{
+  font-family:var(--fd);font-size:.82rem;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--grey-mid);text-align:center;padding-top:44px;
+}
+.scroll-top-btn{
+  position:relative;background:none;border:none;
+  font-family:var(--fd);font-size:clamp(13px,1.3vw,18px);
+  letter-spacing:.2em;text-transform:uppercase;color:var(--grey-dark);overflow:hidden;padding:8px 0;
+}
+.wave-line{display:flex}
+.wave-char{display:inline-block;transition:transform .25s ease,color .25s}
+.scroll-top-btn:hover .wave-char{animation:wChar .5s ease forwards;color:var(--blue)}
+@keyframes wChar{0%{transform:translateY(0)}40%{transform:translateY(-7px)}100%{transform:translateY(0)}}
+
+/* ============================================================
+   WORK PAGE
+============================================================ */
+#work-page{display:none;min-height:100vh;padding:89px 48px 80px}
+#work-page.active{display:block}
+.work-page-title{font-family:var(--fd);font-size:clamp(40px,6vw,100px);text-transform:uppercase;margin-bottom:44px}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+.filter-btn{
+  font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 18px;border:1px solid var(--grey-mid);background:none;
+  transition:background .2s,color .2s,border-color .2s;
+}
+.filter-btn:hover,.filter-btn.active{background:var(--black);color:var(--white);border-color:var(--black)}
+.work-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.work-card{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--grey-bg)}
+.work-card img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(100%) contrast(.75) brightness(1.08);
+  transition:filter .4s ease,transform .4s ease;
+}
+.work-card:hover img{filter:grayscale(0%) contrast(1) brightness(1);transform:scale(1.04)}
+.work-card-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:10px;font-family:var(--fd);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);background:linear-gradient(to top,rgba(0,0,0,.6),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.work-card:hover .work-card-label{opacity:1}
+.back-btn{
+  background:none;border:1px solid var(--black);
+  font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;
+  padding:5px 18px;margin-bottom:34px;transition:background .2s,color .2s;
+}
+.back-btn:hover{background:var(--black);color:var(--white)}
+/* Center scroll arrow in work page */
+.work-scroll-center{display:flex;justify-content:center;margin-top:60px}
+
+/* ============================================================
+   COLLABORATE PAGE
+============================================================ */
+#collab-page{display:none;min-height:100vh;padding:89px 48px 80px;background:var(--black);color:var(--white)}
+#collab-page.active{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.collab-left h2{
+  font-family:var(--fd);font-size:clamp(60px,9vw,144px);
+  text-transform:uppercase;letter-spacing:-.02em;line-height:.86;margin-bottom:24px;
+}
+.collab-left p{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:44px}
+.collab-left .back-btn{border-color:rgba(255,255,255,.25);color:var(--white)}
+.collab-left .back-btn:hover{background:rgba(255,255,255,.08)}
+.collab-right{padding-top:89px}
+.collab-form{display:flex;flex-direction:column;gap:14px;width:100%}
+.collab-form input,.collab-form textarea,.collab-form select{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);
+  color:var(--white);font-family:var(--fm);font-size:.62rem;letter-spacing:.08em;
+  padding:12px 16px;outline:none;width:100%;transition:border-color .2s;
+}
+.collab-form input:focus,.collab-form textarea:focus{border-color:var(--blue)}
+.collab-form textarea{min-height:100px;resize:vertical}
+.collab-form select option{background:var(--black)}
+.collab-submit{
+  background:var(--blue);border:none;color:var(--white);
+  font-family:var(--fd);font-size:1.3rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:12px 34px;align-self:flex-start;transition:background .2s;
+}
+.collab-submit:hover{background:var(--white);color:var(--black)}
+.collab-scroll-top{margin-top:44px}
+#collab-page .scroll-top-btn{color:rgba(255,255,255,.4)}
+#collab-page .scroll-top-btn:hover .wave-char{color:var(--white)}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:900px){
+  .top-bar,.contact-top-bar{padding:12px 24px}
+  #hero,#manifesto,#featured,#about,#work-page,#collab-page{padding-left:24px;padding-right:24px}
+  #featured,#about .about-grid,#collab-page.active{grid-template-columns:1fr}
+  .featured-left{position:relative;top:0}
+  .work-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-body{padding:55px 24px}
+  .hero-tags{align-self:auto}
+}
+@media(max-width:560px){
+  .work-grid{grid-template-columns:1fr}
+  .about-right{grid-template-columns:1fr}
+}
+  </style>
+</head>
+<body>
+
+<!-- RED CIRCLE CURSOR -->
+<div class="cursor-circle" id="cursorCircle"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle class="ring-outer" cx="50" cy="50" r="44" stroke="#1a1a1a" stroke-width="4" stroke-dasharray="230 46"/>
+      <circle class="ring-inner" cx="50" cy="50" r="30" stroke="#1a1a1a" stroke-width="3" stroke-dasharray="150 38"/>
+      <text x="50" y="65" text-anchor="middle" font-family="'Koulen',sans-serif" font-size="40" fill="#1a1a1a">C</text>
+    </svg>
+  </div>
+  <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- OVERLAYS -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- CONTACT DRAWER -->
+<aside class="contact-drawer" id="contactDrawer">
+  <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  <h3>Let's<br>Connect.</h3>
+  <div>
+    <a href="mailto:catelyn@catelynclairecreative.com"><span class="arr">↗</span>catelyn@catelynclairecreative.com</a>
+    <a href="https://www.behance.net/" target="_blank"><span class="arr">↗</span>Behance Portfolio</a>
+    <a href="https://www.linkedin.com/in/" target="_blank"><span class="arr">↗</span>LinkedIn</a>
+    <a href="https://www.instagram.com/" target="_blank"><span class="arr">↗</span>@catelynclairecreative</a>
+  </div>
+  <p style="font-size:.54rem;letter-spacing:.1em;color:rgba(255,255,255,.28);text-transform:uppercase;margin-top:auto">Catelyn Claire Creative · Omaha, NE</p>
+</aside>
+
+<!-- TAG/SUBTITLE PREVIEW -->
+<div class="tag-preview" id="tagPreview">
+  <img src="" alt="" id="tagPreviewImg"/>
+  <div class="tag-preview-overlay"></div>
+</div>
+
+<!-- ======================================================
+     SITE
+====================================================== -->
+<div id="site" style="opacity:0;transition:opacity .8s ease">
+
+  <!-- TOP BAR: logo only (no "CCC" text) -->
+  <header class="top-bar">
+    <a class="top-logo" href="#" onclick="event.preventDefault();scrollToTop()" aria-label="Back to top">
+      <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="15" cy="15" r="12" stroke="currentColor" stroke-width="1.8" stroke-dasharray="55 18"/>
+        <circle cx="15" cy="15" r="7"  stroke="currentColor" stroke-width="1.2" stroke-dasharray="30 12"/>
+        <text x="15" y="20" text-anchor="middle" font-family="'Koulen',sans-serif" font-size="11" fill="currentColor">C</text>
+      </svg>
+    </a>
+    <span class="top-clock" id="liveClock">—</span>
+    <div class="contact-trigger" onclick="openDrawer()"><span>Contact</span></div>
+  </header>
+
+  <!-- ===================================================
+       PAGE 1: HERO
+  =================================================== -->
+  <section id="hero">
+    <div class="hero-name-wrap">
+      <!-- One-line name, fills viewport, centered -->
+      <div class="hero-name" id="heroName" aria-label="Catelyn Rodenbiker"></div>
+      <!-- Subtitle centered under name -->
+      <div class="hero-subtitle" id="heroSubtitle">Design Engineer &amp; Entrepreneur</div>
+    </div>
+
+    <!-- Tags — left aligned, smaller -->
+    <div class="hero-tags">
+      <div class="hero-tag" data-category="branding"    data-preview="images/preview-branding.jpg">Branding</div>
+      <div class="hero-tag" data-category="logo"        data-preview="images/preview-logo.jpg">Logo</div>
+      <div class="hero-tag" data-category="photography" data-preview="images/preview-photography.jpg">Photography</div>
+      <div class="hero-tag" data-category="packaging"   data-preview="images/preview-packaging.jpg">Packaging</div>
+    </div>
+
+    <!-- Scroll arrow — centered at bottom -->
+    <div class="hero-scroll">
+      <button class="scroll-arrow" onclick="document.getElementById('manifesto').scrollIntoView({behavior:'smooth'})">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <line x1="17" y1="4" x2="17" y2="26" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="10,20 17,28 24,20" fill="none" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Scroll</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       PAGE 2: MANIFESTO
+  =================================================== -->
+  <section id="manifesto">
+    <div class="manifesto-sub">Creative. Disciplined. Professional.</div>
+    <div class="manifesto-lines" id="manifestoLines"></div>
+    <div class="manifesto-arrow-wrap">
+      <button class="scroll-arrow" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <line x1="17" y1="4" x2="17" y2="26" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="10,20 17,28 24,20" fill="none" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Scroll</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       PAGE 3: FEATURED + SLOT
+  =================================================== -->
+  <section id="featured">
+    <div class="featured-left">
+      <div class="featured-img">
+        <img src="images/project-mcdonalds.jpg" alt="" id="featuredImgEl" onerror="this.style.display='none'"/>
+      </div>
+      <div class="featured-meta">
+        <span class="meta-label">Overview</span><span class="meta-val" id="metaOverview">Rebrand McDonald's Happy Meal identity</span>
+        <span class="meta-label">Tags</span>    <span class="meta-val" id="metaTags">Package Design. Logo. Branding.</span>
+        <span class="meta-label">Industry</span><span class="meta-val" id="metaIndustry">Package Design. Brand Identity.</span>
+        <span class="meta-label">Client</span>  <span class="meta-val" id="metaClient">Class Project</span>
+      </div>
+      <div class="featured-year" id="featuredYear">2026</div>
+    </div>
+    <div class="slot-right">
+      <div class="slot-controls">
+        <button class="slot-btn" onclick="slotPrev()">↑ prev</button>
+        <button class="slot-btn" onclick="slotNext()">↓ next</button>
+        <button class="slot-btn" onclick="showWorkPage(null)">view all →</button>
+      </div>
+      <div class="slot-machine"><div class="slot-track" id="slotTrack"></div></div>
+    </div>
+
+    <!-- Centered scroll arrow spanning full width -->
+    <div class="featured-scroll-center">
+      <button class="scroll-arrow" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <line x1="17" y1="4" x2="17" y2="26" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="10,20 17,28 24,20" fill="none" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Scroll</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       PAGE 4: ABOUT
+  =================================================== -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-left">
+        <h2>About</h2>
+        <p>Hi, I am so overjoyed you stumbled on my page. Stay awhile! :) I am a designer raised in the corn (Omaha, NE) with aspirations of big city living. I love coffee, music, running, and spending quality time with my loved ones.</p>
+        <h3>Education</h3>
+        <div class="edu-entry">
+          <div class="school">University of Nebraska–Lincoln</div>
+          <div class="degree">Bachelors of Art, Graphic Design</div>
+          <div class="dates">August 2023 – May 2027</div>
+        </div>
+        <div class="edu-entry">
+          <div class="school">University of Nebraska–Lincoln</div>
+          <div class="degree">Bachelors of Journalism, Advertising &amp; Public Relations</div>
+          <div class="dates">August 2023 – May 2027</div>
+        </div>
+        <div class="edu-entry">
+          <div class="school">Metropolitan Community College</div>
+          <div class="degree">Associates of Art, General</div>
+          <div class="dates">August 2019 – May 2023</div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-photo headshot" id="headshotPhoto">
+          <img src="images/catelyn-headshot.jpg" alt="Catelyn Rodenbiker" onerror="this.parentElement.style.background='var(--grey-bg)'"/>
+          <div class="confetti-wrap" id="confettiWrap1"></div>
+        </div>
+        <div class="about-photo side-img" id="sidePhoto">
+          <img src="images/about-2.jpg" alt="" onerror="this.parentElement.style.background='var(--grey-bg)'"/>
+          <div class="confetti-wrap" id="confettiWrap2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-tagline-bar">Creative. Disciplined. Professional.</div>
+    <div class="about-almost">
+      <strong>(you're almost there, keep scrolling :)</strong>
+      <button class="scroll-arrow" onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})">
+        <svg width="30" height="30" viewBox="0 0 34 34" fill="none">
+          <line x1="17" y1="4" x2="17" y2="26" stroke="#b0b0ae" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="10,20 17,28 24,20" fill="none" stroke="#b0b0ae" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       PAGE 5: CONTACT / FOOTER
+  =================================================== -->
+  <section id="contact-section">
+    <div class="contact-top-bar">
+      <span>Omaha, NE</span>
+      <span id="liveClock2">—</span>
+      <span style="text-align:right">Contact</span>
+    </div>
+    <div class="contact-body">
+      <div class="contact-tagline">Creative. Disciplined. Professional.</div>
+      <div class="contact-card">
+        <nav>
+          <a href="#" onclick="event.preventDefault();scrollToTop()">Home</a>
+          <a href="#" onclick="event.preventDefault();document.getElementById('featured').scrollIntoView({behavior:'smooth'})">Work</a>
+          <a href="#" onclick="event.preventDefault();document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+          <a href="#" onclick="event.preventDefault();openDrawer()">Contact</a>
+        </nav>
+      </div>
+      <div class="collab-btn-wrap">
+        <a href="#" class="collab-btn" onclick="event.preventDefault();showCollabPage()">Collaborate Now!</a>
+      </div>
+      <div class="footer-brand">Catelyn Claire Creative</div>
+      <button class="scroll-top-btn" onclick="scrollToTop()">
+        <div class="wave-line" id="waveText"></div>
+      </button>
+    </div>
+  </section>
+
+  <!-- WORK PAGE -->
+  <section id="work-page">
+    <button class="back-btn" onclick="hideWorkPage()">← Back</button>
+    <h2 class="work-page-title" id="workPageTitle">Work</h2>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" onclick="filterWork('all',this)">All</button>
+      <button class="filter-btn" onclick="filterWork('branding',this)">Branding</button>
+      <button class="filter-btn" onclick="filterWork('logo',this)">Logo</button>
+      <button class="filter-btn" onclick="filterWork('photography',this)">Photography</button>
+      <button class="filter-btn" onclick="filterWork('packaging',this)">Packaging</button>
+    </div>
+    <div class="work-grid" id="workGrid"></div>
+    <!-- Centered scroll arrow at bottom of work page -->
+    <div class="work-scroll-center">
+      <button class="scroll-arrow" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+          <line x1="17" y1="4" x2="17" y2="26" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="10,20 17,28 24,20" fill="none" stroke="#0a0a0a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Scroll</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- COLLABORATE PAGE -->
+  <section id="collab-page">
+    <div class="collab-left">
+      <button class="back-btn" onclick="hideCollabPage()">← Back</button>
+      <h2>What's<br>Next?</h2>
+      <p>Let's Chat.</p>
+    </div>
+    <div class="collab-right">
+      <form class="collab-form" onsubmit="return false">
+        <input type="text"  placeholder="Name"/>
+        <input type="email" placeholder="Email"/>
+        <select>
+          <option value="">— Service of Interest —</option>
+          <option>Branding</option><option>Logo Design</option>
+          <option>Photography</option><option>Packaging</option><option>Other</option>
+        </select>
+        <textarea placeholder="Tell me about your project…"></textarea>
+        <button class="collab-submit" type="submit">Send it →</button>
+      </form>
+      <div class="collab-scroll-top">
+        <button class="scroll-top-btn" onclick="scrollToTop()">
+          <div class="wave-line" id="waveText2"></div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /site -->
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ---- DATA -------------------------------------------------- */
+const projects=[
+  {id:1,title:"Charleston Games",    category:"branding",    img:"images/project-charleston.jpg",     overview:"Brand identity for Charleston Games tournament.",                  tags:"Branding. Logo. Print.",                industry:"Entertainment",              client:"Class Project",       year:"2025"},
+  {id:2,title:"McDonald's Happy Meal",category:"packaging",  img:"images/project-mcdonalds.jpg",      overview:"Rebrand and create brand identity for McDonald's Happy Meal.",      tags:"Package Design. Logo. Photo. Branding.",industry:"Package Design. Brand Identity.",client:"Class Project",    year:"2026"},
+  {id:3,title:"Graduate Studies",    category:"branding",    img:"images/project-grad.jpg",           overview:"Brand campaign for UNL Graduate Studies outreach.",                 tags:"Branding. Photography. Print.",          industry:"Higher Education",           client:"UNL Graduate Studies",year:"2025"},
+  {id:4,title:"Student Welcome",     category:"photography", img:"images/project-student-welcome.jpg",overview:"Photography for UNL student welcome events.",                      tags:"Photography. Editorial.",                industry:"Higher Education",           client:"UNL",                 year:"2025"},
+  {id:5,title:"Nurture Nebraska",    category:"logo",        img:"images/project-nurture.jpg",        overview:"Logo and brand identity for Nurture Nebraska nonprofit.",           tags:"Logo. Branding. Identity.",              industry:"Nonprofit",                  client:"Nurture Nebraska",    year:"2025"},
+  {id:6,title:"S-Bar Steakholder",   category:"branding",    img:"images/project-sbar.jpg",           overview:"Full rebrand for S-Bar Steakhouse, Omaha NE.",                     tags:"Branding. Logo. Menu Design.",           industry:"Food & Beverage",            client:"S-Bar Steakholder",   year:"2026"},
+];
+let currentSlot=0;
+
+/* ---- LOADER ----------------------------------------------- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('fade-out');
+    document.getElementById('site').style.opacity='1';
+    setTimeout(()=>document.getElementById('loader').style.display='none',700);
+  },2700);
+});
+
+/* ---- CLOCK — Omaha CST ------------------------------------ */
+function updateClock(){
+  const s=new Date().toLocaleTimeString('en-US',
+    {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'America/Chicago'})+' CST';
+  document.getElementById('liveClock').textContent=s;
+  const c2=document.getElementById('liveClock2');if(c2)c2.textContent=s;
+}
+updateClock();setInterval(updateClock,1000);
+
+/* ---- RED CIRCLE CURSOR ------------------------------------ */
+const circ=document.getElementById('cursorCircle');
+document.addEventListener('mousemove',e=>{
+  circ.style.left=e.clientX+'px';
+  circ.style.top =e.clientY+'px';
+});
+document.querySelectorAll('a,button,.hero-tag,.hero-subtitle,.slot-item,.work-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>circ.classList.add('big'));
+  el.addEventListener('mouseleave',()=>circ.classList.remove('big'));
+});
+
+/* ---- DRAWER ----------------------------------------------- */
+function openDrawer() {document.getElementById('contactDrawer').classList.add('open');   document.getElementById('drawerOverlay').classList.add('open');}
+function closeDrawer(){document.getElementById('contactDrawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('open');}
+
+/* ---- HERO NAME
+   - Single line, auto-sized to fill viewport width
+   - Domino effect: hovered letter tilts in cursor direction;
+     neighbours cascade with decreasing tilt
+----------------------------------------------------- */
+const heroLetters=[]; // flat array of all letter spans
+let lastMouseX=0;
+
+function buildHeroName(){
+  const words=['Catelyn','Rodenbiker'];
+  const c=document.getElementById('heroName');
+  c.innerHTML='';
+  words.forEach((word,wi)=>{
+    const wEl=document.createElement('span');
+    wEl.className='h-word';
+    wEl.style.cssText='display:inline-flex;white-space:nowrap';
+    [...word].forEach(ch=>{
+      const s=document.createElement('span');
+      s.className='h-letter';s.textContent=ch;
+      heroLetters.push(s);
+      wEl.appendChild(s);
+    });
+    c.appendChild(wEl);
+    // space between words
+    if(wi<words.length-1){
+      const sp=document.createElement('span');
+      sp.style.cssText='display:inline-block;width:.18em';
+      c.appendChild(sp);
+    }
+  });
+  fitHeroName();
+  attachDomino();
+}
+
+function fitHeroName(){
+  const c=document.getElementById('heroName');
+  const padPx=80;
+  const avail=window.innerWidth-padPx;
+  // reset size first
+  c.style.fontSize='100px';
+  // use the rendered scroll width of the whole line
+  const ratio=avail/c.scrollWidth;
+  const cur=parseFloat(getComputedStyle(c).fontSize);
+  c.style.fontSize=Math.floor(cur*ratio*0.97)+'px'; // 0.97 safety margin
+}
+
+function attachDomino(){
+  heroLetters.forEach((letter,idx)=>{
+    letter.addEventListener('mouseenter',e=>{
+      const goingRight=e.clientX>=lastMouseX;
+      const cls=goingRight?'tilt-right':'tilt-left';
+      const cls1=goingRight?'tilt-right-1':'tilt-left-1';
+      const cls2=goingRight?'tilt-right-2':'tilt-left-2';
+      // clear all
+      heroLetters.forEach(l=>l.className='h-letter');
+      // apply cascade
+      letter.classList.add(cls);
+      if(heroLetters[idx-1]) heroLetters[idx-1].classList.add(cls2);
+      if(heroLetters[idx+1]) heroLetters[idx+1].classList.add(cls1);
+      if(heroLetters[idx+2]) heroLetters[idx+2].classList.add(cls2);
+      if(heroLetters[idx-2]) heroLetters[idx-2].classList.add(cls2);
+    });
+    letter.addEventListener('mouseleave',()=>{
+      heroLetters.forEach(l=>l.className='h-letter');
+    });
+  });
+  // track mouse direction
+  document.addEventListener('mousemove',e=>{lastMouseX=e.clientX;});
+}
+
+buildHeroName();
+window.addEventListener('resize',fitHeroName);
+
+/* ---- HERO SUBTITLE hover preview + click nav -------------- */
+const heroSub=document.getElementById('heroSubtitle');
+const tagPrev=document.getElementById('tagPreview');
+const tagPrevImg=document.getElementById('tagPreviewImg');
+heroSub.addEventListener('mouseenter',()=>{tagPrevImg.src=projects[1].img;tagPrev.classList.add('visible');});
+heroSub.addEventListener('mouseleave',()=>tagPrev.classList.remove('visible'));
+heroSub.addEventListener('click',()=>showWorkPage(null));
+
+/* ---- HERO TAGS -------------------------------------------- */
+document.querySelectorAll('.hero-tag').forEach(tag=>{
+  tag.addEventListener('mouseenter',()=>{tagPrevImg.src=tag.dataset.preview||'';tagPrev.classList.add('visible');});
+  tag.addEventListener('mouseleave',()=>tagPrev.classList.remove('visible'));
+  tag.addEventListener('click',()=>showWorkPage(tag.dataset.category));
+});
+
+/* ---- MANIFESTO — all 3 lines, scroll-driven
+   "Design." only turns blue when its LINE is hovered
+   (handled in CSS via .manifesto-line:hover .m-word.accent)
+----------------------------------------------------- */
+const manifestoCopy=[
+  {words:['Catelyn','Claire','Creative','Flourishes','within','§Design.']},
+  {words:['Catelyn','Claire','Creative','Establishes','§Design.']},
+  {words:['Catelyn','Claire','Creative','Is','§Design.']},
+];
+(function buildManifesto(){
+  const c=document.getElementById('manifestoLines');
+  manifestoCopy.forEach((line,li)=>{
+    const el=document.createElement('div');
+    el.className='manifesto-line';el.dataset.phase='hidden';
+    line.words.forEach((w,wi)=>{
+      const span=document.createElement('span');
+      const isAcc=w.startsWith('§');
+      span.className='m-word'+(isAcc?' accent':'');
+      span.textContent=w.replace('§','');
+      span.style.transitionDelay=`${li*0.4+wi*0.1}s`;
+      el.appendChild(span);
+    });
+    c.appendChild(el);
+  });
+})();
+
+let lastSY=window.scrollY;
+window.addEventListener('scroll',()=>{
+  const sec=document.getElementById('manifesto');
+  const rect=sec.getBoundingClientRect();
+  const vh=window.innerHeight;
+  const goingDown=window.scrollY>lastSY;
+  lastSY=window.scrollY;
+  const range=sec.offsetHeight-vh;
+  const frac=range>0?Math.max(0,Math.min(1,-rect.top/range)):0;
+  document.querySelectorAll('.manifesto-line').forEach((line,i)=>{
+    const trig=i*0.25;
+    if(goingDown){if(frac>=trig)line.dataset.phase='center';}
+    else{
+      if(frac<trig)line.dataset.phase='hidden';
+      else if(frac<trig+0.1)line.dataset.phase='exit';
+    }
+  });
+},{passive:true});
+
+/* ---- SLOT MACHINE ----------------------------------------- */
+(function buildSlot(){
+  const track=document.getElementById('slotTrack');
+  projects.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className='slot-item'+(i===0?' active':'');
+    d.textContent=p.title;
+    d.addEventListener('click',()=>setSlot(i));
+    d.addEventListener('mouseenter',()=>setFeatured(i));
+    track.appendChild(d);
+  });
+})();
+function setSlot(idx){
+  currentSlot=((idx%projects.length)+projects.length)%projects.length;
+  document.querySelectorAll('.slot-item').forEach((el,i)=>el.classList.toggle('active',i===currentSlot));
+  const h=(document.querySelector('.slot-item')?.offsetHeight||55)+10;
+  document.getElementById('slotTrack').style.transform=`translateY(-${currentSlot*h}px)`;
+  setFeatured(currentSlot);
+}
+function setFeatured(idx){
+  const p=projects[idx];
+  document.getElementById('featuredImgEl').src=p.img;
+  document.getElementById('featuredImgEl').alt=p.title;
+  document.getElementById('metaOverview').textContent=p.overview;
+  document.getElementById('metaTags').textContent=p.tags;
+  document.getElementById('metaIndustry').textContent=p.industry;
+  document.getElementById('metaClient').textContent=p.client;
+  document.getElementById('featuredYear').textContent=p.year;
+}
+function slotNext(){setSlot(currentSlot+1)}
+function slotPrev(){setSlot(currentSlot-1)}
+
+/* ---- WORK GRID -------------------------------------------- */
+function buildWorkGrid(filter){
+  const grid=document.getElementById('workGrid');grid.innerHTML='';
+  (filter==='all'?projects:projects.filter(p=>p.category===filter)).forEach(p=>{
+    const c=document.createElement('div');c.className='work-card';
+    c.innerHTML=`<img src="${p.img}" alt="${p.title}" onerror="this.style.display='none'"/>
+                 <div class="work-card-label">${p.title}</div>`;
+    grid.appendChild(c);
+  });
+}
+function filterWork(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');buildWorkGrid(cat);
+}
+function showWorkPage(category){
+  document.getElementById('work-page').classList.add('active');
+  document.getElementById('work-page').scrollIntoView({behavior:'smooth'});
+  if(category){
+    const btn=[...document.querySelectorAll('.filter-btn')].find(b=>b.textContent.toLowerCase().trim()===category);
+    if(btn)filterWork(category,btn);
+    document.getElementById('workPageTitle').textContent=category.charAt(0).toUpperCase()+category.slice(1);
+  }else{
+    document.getElementById('workPageTitle').textContent='Work';
+    filterWork('all',document.querySelector('.filter-btn'));
+  }
+}
+function hideWorkPage(){
+  document.getElementById('work-page').classList.remove('active');
+  document.getElementById('hero').scrollIntoView({behavior:'smooth'});
+}
+buildWorkGrid('all');
+
+/* ---- COLLAB PAGE ------------------------------------------ */
+function showCollabPage(){document.getElementById('collab-page').classList.add('active');document.getElementById('collab-page').scrollIntoView({behavior:'smooth'});}
+function hideCollabPage(){document.getElementById('collab-page').classList.remove('active');document.getElementById('contact-section').scrollIntoView({behavior:'smooth'});}
+
+/* ---- CONFETTI (no blue) ----------------------------------- */
+const CCOLORS=['#0a0a0a','#3a3a3a','#b0b0ae','#e8e8e6','#ffffff'];
+function spawnConfetti(wrapEl,count=14){
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');p.className='confetti-particle';
+    const sz=5+Math.random()*15,tx=(Math.random()-.5)*130,ty=(Math.random()-.5)*110-20;
+    p.style.cssText=`width:${sz}px;height:${sz}px;background:${CCOLORS[Math.floor(Math.random()*CCOLORS.length)]};top:${15+Math.random()*70}%;left:${15+Math.random()*70}%;--tx:${tx}px;--ty:${ty}px;animation-delay:${Math.random()*.25}s`;
+    p.classList.add('pop');wrapEl.appendChild(p);
+    setTimeout(()=>p.remove(),1050+Math.random()*300);
+  }
+}
+document.getElementById('headshotPhoto').addEventListener('mouseenter',()=>spawnConfetti(document.getElementById('confettiWrap1')));
+document.getElementById('sidePhoto').addEventListener('mouseenter',()=>spawnConfetti(document.getElementById('confettiWrap2')));
+
+/* ---- WAVE BUTTONS ----------------------------------------- */
+function buildWaveBtn(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='↑ Back to Top'.split('').map((ch,i)=>
+    `<span class="wave-char" style="animation-delay:${i*.04}s">${ch===' '?'&nbsp;':ch}</span>`).join('');
+}
+buildWaveBtn('waveText');buildWaveBtn('waveText2');
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
