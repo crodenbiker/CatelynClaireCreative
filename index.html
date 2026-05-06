@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -92,37 +92,37 @@
       <a href="work.html">View all →</a>
     </div>
     <div class="proj-list" role="list">
-      <a class="prow" href="project-mcdonalds.html" data-img="images/project-mcdonalds.jpg" role="listitem">
+      <a class="prow" href="project-mcdonalds.html" data-img="images/project-mcdonalds.jpg">
         <span class="p-name">McDonald's Happy Meal</span>
         <span class="p-cat">Packaging</span>
         <span class="p-yr">2026</span>
         <span class="p-arrow">↗</span>
       </a>
-      <a class="prow" href="project-grad.html" data-img="images/project-grad.jpg" role="listitem">
+      <a class="prow" href="project-grad.html" data-img="images/project-grad.jpg">
         <span class="p-name">Graduate Studies</span>
         <span class="p-cat">Branding</span>
         <span class="p-yr">2025</span>
         <span class="p-arrow">↗</span>
       </a>
-      <a class="prow" href="project-nurture.html" data-img="images/project-nurture.jpg" role="listitem">
+      <a class="prow" href="project-nurture.html" data-img="images/project-nurture.jpg">
         <span class="p-name">Nurture Nebraska</span>
         <span class="p-cat">Logo</span>
         <span class="p-yr">2025</span>
         <span class="p-arrow">↗</span>
       </a>
-      <a class="prow" href="project-charleston.html" data-img="images/project-charleston.jpg" role="listitem">
+      <a class="prow" href="project-charleston.html" data-img="images/project-charleston.jpg">
         <span class="p-name">Charleston Games</span>
         <span class="p-cat">Branding</span>
         <span class="p-yr">2025</span>
         <span class="p-arrow">↗</span>
       </a>
-      <a class="prow" href="project-sbar.html" data-img="images/project-sbar.jpg" role="listitem">
+      <a class="prow" href="project-sbar.html" data-img="images/project-sbar.jpg">
         <span class="p-name">S-Bar Steakhouse</span>
         <span class="p-cat">Branding</span>
         <span class="p-yr">2026</span>
         <span class="p-arrow">↗</span>
       </a>
-      <a class="prow" href="project-welcome.html" data-img="images/project-student-welcome.jpg" role="listitem">
+      <a class="prow" href="project-welcome.html" data-img="images/project-student-welcome.jpg">
         <span class="p-name">Student Welcome</span>
         <span class="p-cat">Photography</span>
         <span class="p-yr">2025</span>
@@ -178,7 +178,8 @@
           <a href="https://www.instagram.com/catelynclairecreative" target="_blank" rel="noopener noreferrer">Instagram <span class="arr">↗</span></a>
         </div>
 
-        <form class="c-form" onsubmit="submitForm(event)" novalidate aria-label="Contact form">
+        <form class="c-form" name="contact" method="POST" data-netlify="true" onsubmit="submitForm(event)" novalidate aria-label="Contact form">
+          <input type="hidden" name="form-name" value="contact" />
           <div class="cff">
             <label for="fn">Name</label>
             <input type="text" id="fn" name="name" autocomplete="name" required placeholder="Your name" />
@@ -488,10 +489,10 @@
     spawnConfetti(document.getElementById('confWrap'));
   });
 
-  /* ── Contact form ─────────────────────────────────────── */
+  /* ── Contact form (Netlify Forms) ────────────────────────── */
   function submitForm(e) {
     e.preventDefault();
-    const form = e.target;
+    const form  = e.target;
     const allFilled = [...form.querySelectorAll('[required]')].every(el => el.value.trim());
 
     if (!allFilled) {
@@ -500,16 +501,31 @@
     }
 
     const btn = form.querySelector('.c-send');
-    btn.textContent = 'Sent ✓';
-    btn.style.background   = '#1a9e4c';
-    btn.style.borderColor  = '#1a9e4c';
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
 
-    setTimeout(() => {
-      btn.textContent = 'Send →';
-      btn.style.background  = '';
-      btn.style.borderColor = '';
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
+      btn.textContent      = 'Sent ✓';
+      btn.style.background = '#1a9e4c';
+      btn.style.borderColor= '#1a9e4c';
       form.reset();
-    }, 3000);
+      setTimeout(() => {
+        btn.textContent      = 'Send →';
+        btn.style.background = '';
+        btn.style.borderColor= '';
+        btn.disabled = false;
+      }, 4000);
+    })
+    .catch(() => {
+      btn.textContent = 'Send →';
+      btn.disabled    = false;
+      alert('Something went wrong — please email catelyn@catelynclairecreative.com directly.');
+    });
   }
 </script>
 
