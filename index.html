@@ -1,61 +1,75 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <meta name="description" content="Catelyn Claire Creative — Graphic Designer based in Omaha, NE. Branding, logo design, photography, and packaging."/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Catelyn Claire Creative — Graphic Designer based in Omaha, NE. Branding, logo design, photography, and packaging." />
   <title>Catelyn Claire Creative</title>
-  <link rel="stylesheet" href="styles.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Koulen&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 </head>
 <body>
 
+<!-- Custom cursor -->
 <div id="cursor" aria-hidden="true"></div>
 
+<!-- Loading screen -->
 <div id="loader" role="status" aria-label="Loading">
   <div class="ld-ring">
     <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-      <circle class="ra" cx="50" cy="50" r="44" stroke="#0a0a0a" stroke-width="3.5" stroke-dasharray="220 50"/>
-      <circle class="rb" cx="50" cy="50" r="28" stroke="#0a0a0a" stroke-width="2.5" stroke-dasharray="130 44"/>
+      <circle class="ra" cx="50" cy="50" r="44" stroke="#0a0a0a" stroke-width="3.5" stroke-dasharray="220 50" />
+      <circle class="rb" cx="50" cy="50" r="28" stroke="#0a0a0a" stroke-width="2.5" stroke-dasharray="130 44" />
       <text x="50" y="66" text-anchor="middle" font-family="Koulen,sans-serif" font-size="38" fill="#0a0a0a">C</text>
     </svg>
   </div>
   <div class="ld-bar"><div class="ld-fill"></div></div>
 </div>
 
+<!-- Contact drawer -->
 <div class="drawer-mask" id="dMask" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer" aria-label="Contact links">
-  <button class="drawer-x" onclick="closeDrawer()" aria-label="Close">✕</button>
+  <button class="drawer-x" onclick="closeDrawer()" aria-label="Close drawer">✕</button>
   <h3>Let's<br>Connect.</h3>
   <div class="drawer-links">
-    <a href="mailto:catelyn@catelynclairecreative.com">catelyn@catelynclairecreative.com<span class="arr"> ↗</span></a>
-    <a href="https://www.behance.net/catelynrodenbiker" target="_blank" rel="noopener">Behance<span class="arr"> ↗</span></a>
-    <a href="https://www.linkedin.com/in/catelynrodenbiker" target="_blank" rel="noopener">LinkedIn<span class="arr"> ↗</span></a>
-    <a href="https://www.instagram.com/catelynclairecreative" target="_blank" rel="noopener">Instagram<span class="arr"> ↗</span></a>
+    <a href="mailto:catelyn@catelynclairecreative.com">catelyn@catelynclairecreative.com <span class="arr">↗</span></a>
+    <a href="https://www.behance.net/catelynrodenbiker" target="_blank" rel="noopener noreferrer">Behance <span class="arr">↗</span></a>
+    <a href="https://www.linkedin.com/in/catelynrodenbiker" target="_blank" rel="noopener noreferrer">LinkedIn <span class="arr">↗</span></a>
+    <a href="https://www.instagram.com/catelynclairecreative" target="_blank" rel="noopener noreferrer">Instagram <span class="arr">↗</span></a>
   </div>
   <p class="drawer-note">Catelyn Claire Creative · Omaha, NE</p>
 </aside>
 
+<!-- Hero tag image preview (left-side overlay) -->
 <div id="tag-prev" aria-hidden="true">
-  <img id="tag-prev-img" src="" alt=""/>
+  <img id="tag-prev-img" src="" alt="" />
   <div id="tag-prev-fade"></div>
 </div>
-<div id="proj-float" aria-hidden="true"><img id="pf-img" src="" alt=""/></div>
 
-<div id="site" style="opacity:0;transition:opacity .7s ease">
+<!-- Floating project image that follows cursor on work list -->
+<div id="proj-float" aria-hidden="true">
+  <img id="pf-img" src="" alt="" />
+</div>
+
+<!-- Main site (fades in after loader) -->
+<div id="site">
 
   <nav class="site-nav">
     <a class="nav-logo" href="index.html">Catelyn Claire Creative</a>
     <ul class="nav-right">
       <li><a href="work.html">Work</a></li>
-      <li><a href="#s-about" onclick="event.preventDefault();goTo(2)">About</a></li>
-      <li><button class="nav-cta" id="cBtn" onclick="openDrawer()" aria-expanded="false" aria-controls="drawer">Contact</button></li>
+      <li><a href="#s-about" onclick="event.preventDefault(); goTo(2)">About</a></li>
+      <li>
+        <button class="nav-cta" id="cBtn" onclick="openDrawer()"
+                aria-expanded="false" aria-controls="drawer">
+          Contact
+        </button>
+      </li>
     </ul>
   </nav>
 
-  <!-- §1 HERO -->
-  <section class="panel" id="s-hero" aria-label="Hero">
-    <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+  <!-- Section 1: Hero -->
+  <section class="panel" id="s-hero" aria-label="Introduction">
+    <div class="hero-main">
       <p class="hero-eyebrow">Graphic Designer — Omaha, NE</p>
       <div class="hero-name" id="hName" aria-label="Catelyn Rodenbiker"></div>
       <p class="hero-role">Design Engineer &amp; Entrepreneur</p>
@@ -71,7 +85,7 @@
     </div>
   </section>
 
-  <!-- §2 WORK LIST -->
+  <!-- Section 2: Work list -->
   <section class="panel" id="s-work" aria-label="Selected work">
     <div class="wl-head">
       <h2>Work</h2>
@@ -117,13 +131,13 @@
     </div>
   </section>
 
-  <!-- §3 ABOUT -->
-  <section class="panel" id="s-about" aria-label="About">
+  <!-- Section 3: About -->
+  <section class="panel" id="s-about" aria-label="About Catelyn">
     <div class="about-l">
       <span class="eyebrow">About</span>
       <h2>Catelyn<br>Rodenbiker</h2>
       <p>Hi — I'm a designer raised in the corn (Omaha, NE) with aspirations of big city living. I love coffee, music, running, and spending quality time with my loved ones.</p>
-      <div>
+      <div class="edu-list">
         <div class="edu-item">
           <div class="edu-school">University of Nebraska–Lincoln</div>
           <div class="edu-deg">BA Graphic Design &amp; BJ Advertising / Public Relations</div>
@@ -138,52 +152,71 @@
     </div>
     <div class="about-r">
       <div class="about-img" id="aPhoto">
-        <img src="images/catelyn-headshot.jpg" alt="Catelyn Rodenbiker" loading="lazy"
-             onerror="this.parentElement.style.background='var(--g1)'"/>
+        <img
+          src="images/catelyn-headshot.jpg"
+          alt="Catelyn Rodenbiker, graphic designer"
+          loading="lazy"
+          onerror="this.parentElement.style.background='var(--g1)'"
+        />
         <div class="conf-wrap" id="confWrap" aria-hidden="true"></div>
       </div>
       <div class="about-badge">Omaha, NE</div>
     </div>
   </section>
 
-  <!-- §4 CONTACT -->
+  <!-- Section 4: Contact -->
   <section class="panel" id="s-contact" aria-label="Contact">
     <div class="contact-inner">
       <span class="contact-eyebrow">Get in touch</span>
       <h2>Let's<br>Work<br>Together.</h2>
       <div class="c-grid">
+
         <div class="c-links">
-          <a href="mailto:catelyn@catelynclairecreative.com">Email<span class="arr"> ↗</span></a>
-          <a href="https://www.behance.net/catelynrodenbiker" target="_blank" rel="noopener">Behance<span class="arr"> ↗</span></a>
-          <a href="https://www.linkedin.com/in/catelynrodenbiker" target="_blank" rel="noopener">LinkedIn<span class="arr"> ↗</span></a>
-          <a href="https://www.instagram.com/catelynclairecreative" target="_blank" rel="noopener">Instagram<span class="arr"> ↗</span></a>
+          <a href="mailto:catelyn@catelynclairecreative.com">Email <span class="arr">↗</span></a>
+          <a href="https://www.behance.net/catelynrodenbiker" target="_blank" rel="noopener noreferrer">Behance <span class="arr">↗</span></a>
+          <a href="https://www.linkedin.com/in/catelynrodenbiker" target="_blank" rel="noopener noreferrer">LinkedIn <span class="arr">↗</span></a>
+          <a href="https://www.instagram.com/catelynclairecreative" target="_blank" rel="noopener noreferrer">Instagram <span class="arr">↗</span></a>
         </div>
+
         <form class="c-form" onsubmit="submitForm(event)" novalidate aria-label="Contact form">
-          <div class="cff"><label for="fn">Name</label><input type="text" id="fn" name="name" autocomplete="name" required placeholder="Your name"/></div>
-          <div class="cff"><label for="fe">Email</label><input type="email" id="fe" name="email" autocomplete="email" required placeholder="your@email.com"/></div>
+          <div class="cff">
+            <label for="fn">Name</label>
+            <input type="text" id="fn" name="name" autocomplete="name" required placeholder="Your name" />
+          </div>
+          <div class="cff">
+            <label for="fe">Email</label>
+            <input type="email" id="fe" name="email" autocomplete="email" required placeholder="your@email.com" />
+          </div>
           <div class="cff">
             <label for="fs">Service</label>
             <select id="fs" name="service" required>
               <option value="">— Select —</option>
-              <option>Branding</option><option>Logo Design</option>
-              <option>Photography</option><option>Packaging</option><option>Other</option>
+              <option value="branding">Branding</option>
+              <option value="logo">Logo Design</option>
+              <option value="photography">Photography</option>
+              <option value="packaging">Packaging</option>
+              <option value="other">Other</option>
             </select>
           </div>
-          <div class="cff"><label for="fm">Message</label><textarea id="fm" name="message" required placeholder="Tell me about your project…"></textarea></div>
+          <div class="cff">
+            <label for="fm">Message</label>
+            <textarea id="fm" name="message" required placeholder="Tell me about your project…"></textarea>
+          </div>
           <button class="c-send" type="submit">Send →</button>
         </form>
+
       </div>
     </div>
     <div class="contact-bar">
       <span>Catelyn Claire Creative © 2026</span>
-      <span class="live-clock">—</span>
+      <span class="live-clock" aria-hidden="true">—</span>
       <button class="top-btn" onclick="goTo(0)">↑ Top</button>
     </div>
   </section>
 
-</div><!-- /site -->
+</div><!-- /#site -->
 
-<!-- SIDE DOTS -->
+<!-- Side navigation dots -->
 <nav class="sdots" id="sdots" aria-label="Page sections">
   <button class="sdot on" onclick="goTo(0)" aria-label="Hero"></button>
   <button class="sdot"    onclick="goTo(1)" aria-label="Work"></button>
@@ -192,195 +225,293 @@
 </nav>
 
 <script>
-/* ── LOADER ────────────────────────────── */
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('loader').classList.add('out');
-    document.getElementById('site').style.opacity = '1';
-    setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-  }, 1800);
-});
-
-/* ── CURSOR ────────────────────────────── */
-const cur = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top  = e.clientY + 'px';
-});
-document.querySelectorAll('a, button, .htag, .prow').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('grow'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('grow'));
-});
-
-/* ── CLOCK ─────────────────────────────── */
-(function tick() {
-  const t = new Date().toLocaleTimeString('en-US', {
-    hour: '2-digit', minute: '2-digit', second: '2-digit',
-    hour12: false, timeZone: 'America/Chicago'
-  }) + ' CST';
-  document.querySelectorAll('.live-clock').forEach(el => el.textContent = t);
-  setTimeout(tick, 1000);
-})();
-
-/* ── DRAWER ────────────────────────────── */
-function openDrawer()  {
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('dMask').classList.add('open');
-  document.getElementById('cBtn').setAttribute('aria-expanded', 'true');
-}
-function closeDrawer() {
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('dMask').classList.remove('open');
-  document.getElementById('cBtn').setAttribute('aria-expanded', 'false');
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
-
-/* ── SECTION SCROLL SNAP ───────────────── */
-const IDS = ['s-hero','s-work','s-about','s-contact'];
-let cur_s = 0, busy = false;
-
-function goTo(i) {
-  if (i < 0 || i >= IDS.length) return;
-  cur_s = i;
-  document.getElementById(IDS[i]).scrollIntoView({ behavior: 'smooth' });
-  updateDots();
-  /* darken dots on contact panel */
-  document.getElementById('sdots').classList.toggle('dark', i === 3);
-}
-function updateDots() {
-  document.querySelectorAll('.sdot').forEach((d, i) => d.classList.toggle('on', i === cur_s));
-}
-
-let wt = null;
-window.addEventListener('wheel', e => {
-  if (busy) return;
-  clearTimeout(wt);
-  wt = setTimeout(() => {
-    busy = true;
-    if      (e.deltaY >  25) goTo(cur_s + 1);
-    else if (e.deltaY < -25) goTo(cur_s - 1);
-    setTimeout(() => busy = false, 950);
-  }, 40);
-}, { passive: true });
-
-let ty0 = 0;
-window.addEventListener('touchstart', e => { ty0 = e.touches[0].clientY; }, { passive: true });
-window.addEventListener('touchend',   e => {
-  const d = ty0 - e.changedTouches[0].clientY;
-  if (Math.abs(d) > 50) goTo(cur_s + (d > 0 ? 1 : -1));
-}, { passive: true });
-
-new IntersectionObserver(entries => {
-  entries.forEach(en => {
-    if (en.isIntersecting && en.intersectionRatio >= 0.5) {
-      cur_s = IDS.indexOf(en.target.id);
-      updateDots();
-      document.getElementById('sdots').classList.toggle('dark', cur_s === 3);
-    }
+  /* ── Loader ───────────────────────────────────────────── */
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('out');
+      document.getElementById('site').style.opacity = '1';
+      setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+      }, 500);
+    }, 1800);
   });
-}, { threshold: 0.5 }).observe
-? IDS.forEach(id => {
+
+  /* ── Cursor ───────────────────────────────────────────── */
+  const cursor = document.getElementById('cursor');
+
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+
+  document.querySelectorAll('a, button, .htag, .prow').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+  });
+
+  /* ── Clock ────────────────────────────────────────────── */
+  function updateClock() {
+    const time = new Date().toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'America/Chicago'
+    }) + ' CST';
+    document.querySelectorAll('.live-clock').forEach(el => el.textContent = time);
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  /* ── Contact drawer ───────────────────────────────────── */
+  function openDrawer() {
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('dMask').classList.add('open');
+    document.getElementById('cBtn').setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDrawer() {
+    document.getElementById('drawer').classList.remove('open');
+    document.getElementById('dMask').classList.remove('open');
+    document.getElementById('cBtn').setAttribute('aria-expanded', 'false');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  /* ── Section snap scrolling ───────────────────────────── */
+  const SECTIONS = ['s-hero', 's-work', 's-about', 's-contact'];
+  let currentSection = 0;
+  let scrollBusy = false;
+
+  function goTo(index) {
+    if (index < 0 || index >= SECTIONS.length) return;
+    currentSection = index;
+    document.getElementById(SECTIONS[index]).scrollIntoView({ behavior: 'smooth' });
+    updateDots();
+    document.getElementById('sdots').classList.toggle('dark', index === 3);
+  }
+
+  function updateDots() {
+    document.querySelectorAll('.sdot').forEach((dot, i) => {
+      dot.classList.toggle('on', i === currentSection);
+    });
+  }
+
+  // Mouse wheel snapping
+  let wheelTimer = null;
+  window.addEventListener('wheel', e => {
+    if (scrollBusy) return;
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      scrollBusy = true;
+      if (e.deltaY > 25)       goTo(currentSection + 1);
+      else if (e.deltaY < -25) goTo(currentSection - 1);
+      setTimeout(() => scrollBusy = false, 950);
+    }, 40);
+  }, { passive: true });
+
+  // Touch swipe snapping
+  let touchStartY = 0;
+  window.addEventListener('touchstart', e => {
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', e => {
+    const delta = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(delta) > 50) goTo(currentSection + (delta > 0 ? 1 : -1));
+  }, { passive: true });
+
+  // Track which section is visible via IntersectionObserver
+  SECTIONS.forEach(id => {
     const el = document.getElementById(id);
-    if (el) new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (en.isIntersecting && en.intersectionRatio >= 0.5) {
-          cur_s = IDS.indexOf(en.target.id);
+    if (!el) return;
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          currentSection = SECTIONS.indexOf(id);
           updateDots();
-          document.getElementById('sdots').classList.toggle('dark', cur_s === 3);
+          document.getElementById('sdots').classList.toggle('dark', currentSection === 3);
         }
       });
     }, { threshold: 0.5 }).observe(el);
-  })
-: null;
-
-/* ── HERO NAME ─────────────────────────── */
-const hLetters = []; let lastX = 0;
-function buildName() {
-  const c = document.getElementById('hName'); c.innerHTML = '';
-  ['Catelyn','Rodenbiker'].forEach((word, wi) => {
-    const w = document.createElement('span');
-    w.style.cssText = 'display:inline-flex;white-space:nowrap';
-    [...word].forEach(ch => {
-      const s = document.createElement('span'); s.className = 'hl'; s.textContent = ch;
-      hLetters.push(s); w.appendChild(s);
-    });
-    c.appendChild(w);
-    if (wi === 0) { const sp = document.createElement('span'); sp.style.cssText = 'display:inline-block;width:.13em'; c.appendChild(sp); }
   });
-  fitName(); domino();
-}
-function fitName() {
-  const c = document.getElementById('hName');
-  c.style.fontSize = '100px';
-  const ratio = (window.innerWidth - 104) / c.scrollWidth;
-  c.style.fontSize = Math.floor(parseFloat(getComputedStyle(c).fontSize) * ratio * 0.97) + 'px';
-}
-function domino() {
-  hLetters.forEach((l, i) => {
-    l.addEventListener('mouseenter', e => {
-      const r = e.clientX >= lastX;
-      const C = r?'tr':'tl', C1 = r?'tr1':'tl1', C2 = r?'tr2':'tl2';
-      hLetters.forEach(x => x.className = 'hl');
-      l.classList.add(C);
-      if (hLetters[i-1]) hLetters[i-1].classList.add(C2);
-      if (hLetters[i-2]) hLetters[i-2].classList.add(C2);
-      if (hLetters[i+1]) hLetters[i+1].classList.add(C1);
-      if (hLetters[i+2]) hLetters[i+2].classList.add(C2);
+
+  /* ── Hero name: fills viewport width, domino tilt ─────── */
+  const nameLetters = [];
+  let lastMouseX = 0;
+
+  function buildName() {
+    const container = document.getElementById('hName');
+    container.innerHTML = '';
+
+    ['Catelyn', 'Rodenbiker'].forEach((word, wordIndex) => {
+      const wordEl = document.createElement('span');
+      wordEl.style.cssText = 'display:inline-flex;white-space:nowrap';
+
+      [...word].forEach(char => {
+        const letterEl = document.createElement('span');
+        letterEl.className = 'hl';
+        letterEl.textContent = char;
+        nameLetters.push(letterEl);
+        wordEl.appendChild(letterEl);
+      });
+
+      container.appendChild(wordEl);
+
+      if (wordIndex === 0) {
+        const space = document.createElement('span');
+        space.style.cssText = 'display:inline-block;width:.13em';
+        container.appendChild(space);
+      }
     });
-    l.addEventListener('mouseleave', () => hLetters.forEach(x => x.className = 'hl'));
-  });
-  document.addEventListener('mousemove', e => lastX = e.clientX);
-}
-buildName();
-window.addEventListener('resize', fitName);
 
-/* ── HERO TAGS ─────────────────────────── */
-const tp = document.getElementById('tag-prev');
-const tpi = document.getElementById('tag-prev-img');
-document.querySelectorAll('.htag').forEach(t => {
-  t.addEventListener('mouseenter', () => { tpi.src = t.dataset.img||''; tp.classList.add('on'); });
-  t.addEventListener('mouseleave', () => tp.classList.remove('on'));
-  t.addEventListener('click',   () => location.href = 'work.html?cat=' + t.dataset.cat);
-  t.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); location.href='work.html?cat='+t.dataset.cat; } });
-});
-
-/* ── PROJECT ROW FLOAT IMAGE ───────────── */
-const pf = document.getElementById('proj-float');
-const pfi = document.getElementById('pf-img');
-let mx = 0, my = 0, fx = 0, fy = 0, raf = null;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animFloat() {
-  fx += (mx - fx) * 0.1; fy += (my - fy) * 0.1;
-  pf.style.left = (fx + 28) + 'px'; pf.style.top = (fy - 90) + 'px';
-  raf = requestAnimationFrame(animFloat);
-}
-document.querySelectorAll('.prow').forEach(row => {
-  row.addEventListener('mouseenter', () => { pfi.src = row.dataset.img||''; pf.classList.add('on'); if(!raf) raf = requestAnimationFrame(animFloat); });
-  row.addEventListener('mouseleave', () => { pf.classList.remove('on'); cancelAnimationFrame(raf); raf = null; });
-});
-
-/* ── CONFETTI ──────────────────────────── */
-const CC = ['#0a0a0a','#3a3a3a','#b0b0ae','#e8e8e6','#2255ff'];
-function confetti(wrap, n=16) {
-  for (let i=0; i<n; i++) {
-    const p = document.createElement('div'); p.className = 'conf-p';
-    const sz = 5+Math.random()*14, tx=(Math.random()-.5)*150, ty=(Math.random()-.5)*130-20;
-    p.style.cssText = `width:${sz}px;height:${sz}px;background:${CC[~~(Math.random()*CC.length)]};top:${10+Math.random()*70}%;left:${10+Math.random()*70}%;--tx:${tx}px;--ty:${ty}px;animation-delay:${Math.random()*.22}s`;
-    p.classList.add('pop'); wrap.appendChild(p);
-    setTimeout(() => p.remove(), 1100);
+    fitName();
+    attachDomino();
   }
-}
-document.getElementById('aPhoto').addEventListener('mouseenter', () => confetti(document.getElementById('confWrap')));
 
-/* ── CONTACT FORM ──────────────────────── */
-function submitForm(e) {
-  e.preventDefault();
-  const f = e.target;
-  if (![...f.querySelectorAll('[required]')].every(el => el.value.trim())) { alert('Please fill in all fields.'); return; }
-  const btn = f.querySelector('.c-send');
-  btn.textContent = 'Sent ✓'; btn.style.cssText = 'background:#1a9e4c;border-color:#1a9e4c';
-  setTimeout(() => { btn.textContent = 'Send →'; btn.style.cssText = ''; f.reset(); }, 3000);
-}
+  function fitName() {
+    const container = document.getElementById('hName');
+    container.style.fontSize = '100px';
+    const ratio = (window.innerWidth - 104) / container.scrollWidth;
+    container.style.fontSize = Math.floor(
+      parseFloat(getComputedStyle(container).fontSize) * ratio * 0.97
+    ) + 'px';
+  }
+
+  function attachDomino() {
+    nameLetters.forEach((letter, i) => {
+      letter.addEventListener('mouseenter', e => {
+        const goingRight = e.clientX >= lastMouseX;
+        const main  = goingRight ? 'tr'  : 'tl';
+        const near  = goingRight ? 'tr1' : 'tl1';
+        const far   = goingRight ? 'tr2' : 'tl2';
+
+        nameLetters.forEach(l => l.className = 'hl');
+        letter.classList.add(main);
+        if (nameLetters[i - 1]) nameLetters[i - 1].classList.add(far);
+        if (nameLetters[i - 2]) nameLetters[i - 2].classList.add(far);
+        if (nameLetters[i + 1]) nameLetters[i + 1].classList.add(near);
+        if (nameLetters[i + 2]) nameLetters[i + 2].classList.add(far);
+      });
+      letter.addEventListener('mouseleave', () => {
+        nameLetters.forEach(l => l.className = 'hl');
+      });
+    });
+
+    document.addEventListener('mousemove', e => lastMouseX = e.clientX);
+  }
+
+  buildName();
+  window.addEventListener('resize', fitName);
+
+  /* ── Hero discipline tags: image preview on hover ─────── */
+  const tagPreview    = document.getElementById('tag-prev');
+  const tagPreviewImg = document.getElementById('tag-prev-img');
+
+  document.querySelectorAll('.htag').forEach(tag => {
+    tag.addEventListener('mouseenter', () => {
+      tagPreviewImg.src = tag.dataset.img || '';
+      tagPreview.classList.add('on');
+    });
+    tag.addEventListener('mouseleave', () => tagPreview.classList.remove('on'));
+    tag.addEventListener('click', () => {
+      location.href = 'work.html?cat=' + tag.dataset.cat;
+    });
+    tag.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        location.href = 'work.html?cat=' + tag.dataset.cat;
+      }
+    });
+  });
+
+  /* ── Work list: floating image follows cursor ─────────── */
+  const projFloat    = document.getElementById('proj-float');
+  const projFloatImg = document.getElementById('pf-img');
+  let mouseX = 0, mouseY = 0;
+  let floatX = 0, floatY = 0;
+  let floatRaf = null;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateFloat() {
+    floatX += (mouseX - floatX) * 0.1;
+    floatY += (mouseY - floatY) * 0.1;
+    projFloat.style.left = (floatX + 28) + 'px';
+    projFloat.style.top  = (floatY - 90) + 'px';
+    floatRaf = requestAnimationFrame(animateFloat);
+  }
+
+  document.querySelectorAll('.prow').forEach(row => {
+    row.addEventListener('mouseenter', () => {
+      projFloatImg.src = row.dataset.img || '';
+      projFloat.classList.add('on');
+      if (!floatRaf) floatRaf = requestAnimationFrame(animateFloat);
+    });
+    row.addEventListener('mouseleave', () => {
+      projFloat.classList.remove('on');
+      cancelAnimationFrame(floatRaf);
+      floatRaf = null;
+    });
+  });
+
+  /* ── About photo: confetti on hover ──────────────────── */
+  const CONFETTI_COLORS = ['#0a0a0a', '#3a3a3a', '#b0b0ae', '#e8e8e6', '#2255ff'];
+
+  function spawnConfetti(wrap, count = 16) {
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'conf-p';
+      const size = 5 + Math.random() * 14;
+      const tx   = (Math.random() - 0.5) * 150;
+      const ty   = (Math.random() - 0.5) * 130 - 20;
+      const color = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+      particle.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        background: ${color};
+        top: ${10 + Math.random() * 70}%;
+        left: ${10 + Math.random() * 70}%;
+        --tx: ${tx}px; --ty: ${ty}px;
+        animation-delay: ${Math.random() * 0.22}s
+      `;
+      particle.classList.add('pop');
+      wrap.appendChild(particle);
+      setTimeout(() => particle.remove(), 1100);
+    }
+  }
+
+  document.getElementById('aPhoto').addEventListener('mouseenter', () => {
+    spawnConfetti(document.getElementById('confWrap'));
+  });
+
+  /* ── Contact form ─────────────────────────────────────── */
+  function submitForm(e) {
+    e.preventDefault();
+    const form = e.target;
+    const allFilled = [...form.querySelectorAll('[required]')].every(el => el.value.trim());
+
+    if (!allFilled) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const btn = form.querySelector('.c-send');
+    btn.textContent = 'Sent ✓';
+    btn.style.background   = '#1a9e4c';
+    btn.style.borderColor  = '#1a9e4c';
+
+    setTimeout(() => {
+      btn.textContent = 'Send →';
+      btn.style.background  = '';
+      btn.style.borderColor = '';
+      form.reset();
+    }, 3000);
+  }
 </script>
+
 </body>
 </html>
