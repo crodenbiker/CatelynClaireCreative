@@ -11,7 +11,7 @@
   --white  : #ffffff;
   --cream  : #f5f5f3;
   --g1     : #e8e8e6;
-  --g2     : #b0b0ae;
+  --g2     : #707070;
   --g3     : #6a6a68;
   --blue   : #2255ff;
   --red    : #e02020;
@@ -219,9 +219,10 @@ button { font-family: inherit; cursor: none; }
   opacity: 0; transition: opacity .28s ease; overflow: hidden;
 }
 #tag-prev.on { opacity: 1; }
-#tag-prev img { width: 100%; height: 100%; object-fit: cover; }
+#tag-prev img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 #tag-prev-fade {
   position: absolute; inset: 0;
+  pointer-events: none;
   background: linear-gradient(to right, transparent 48%, var(--cream) 100%);
 }
 
